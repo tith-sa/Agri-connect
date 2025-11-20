@@ -24,10 +24,7 @@ export const authenicate = (
 export const authorize = (allowRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const userRole = req.user?.roles;
-    if (
-      !userRole ||
-      !allowRoles.some((role: string) => allowRoles.includes(role))
-    ) {
+    if (!userRole.some((role: string) => allowRoles.includes(role))) {
       return res.status(403).json({
         message: "Forbidden",
       });

@@ -1,8 +1,13 @@
 import express from "express";
 import { createUserController } from "@/controllers/userController";
-import { authenicate } from "@/middleware/authMiddleware";
+import { authenicate, authorize } from "@/middleware/authMiddleware";
 
 const router = express.Router();
 
-router.post("/create-user", authenicate, createUserController);
+router.post(
+  "/create-user",
+  authenicate,
+  authorize(["admin"]),
+  createUserController
+);
 export default router;

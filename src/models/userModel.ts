@@ -9,7 +9,6 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     phone: { type: String, unique: true },
-    roles: [{ type: Schema.Types.ObjectId, ref: "Role", required: true }],
     status: {
       type: String,
       enum: ["active", "inactive"],
@@ -19,4 +18,4 @@ const userSchema = new Schema<IUser>(
   },
   { timestamps: true }
 );
-export default mongoose.model<IUser>("user", userSchema);
+export default mongoose.model<IUser>("User", userSchema);

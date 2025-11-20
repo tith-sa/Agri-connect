@@ -20,7 +20,7 @@ import { Request, Response } from "express";
  *               - userName
  *               - email
  *               - password
- *               - status
+ *               - phone
  *             properties:
  *               firstName:
  *                 type: string
@@ -40,10 +40,7 @@ import { Request, Response } from "express";
  *               phone:
  *                 type: string
  *                 example: "+85512345678"
- *               status:
- *                 type: string
- *                 enum: [active, inactive]
- *                 example: active
+ *
  *     responses:
  *       201:
  *         description: User registered successfully
