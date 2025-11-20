@@ -35,8 +35,18 @@ export const createUserService = async (req: Request, res: Response) => {
     res.status(201).json({
       success: true,
       data: newUser,
+      roles: [defaultRole.name],
       message: "User created successfully",
     });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getAllUsersService = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({ success: true, data: users });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
