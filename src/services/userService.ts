@@ -7,7 +7,6 @@ import bcrypt from "bcryptjs";
 export const createUserService = async (req: Request, res: Response) => {
   try {
     const { firstName, lastName, userName, email, password, phone } = req.body;
-    const userId = req.user?.userId;
     const existUser = await User.findOne({ email }, { userName });
     if (existUser) {
       return res.status(400).json({ message: "User already exists" });
@@ -20,7 +19,6 @@ export const createUserService = async (req: Request, res: Response) => {
       email,
       password: passwordHash,
       phone,
-      createdBy: userId,
     });
     await newUser.save();
 
