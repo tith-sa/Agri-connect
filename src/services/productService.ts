@@ -67,10 +67,10 @@ export const getAllProductsService = async (req: Request, res: Response) => {
       .sort({ createdAt: -1 });
     const totalProducts = await Product.countDocuments();
     const totalPage = Math.ceil(totalProducts / limit);
+
     res.status(200).json({
       success: true,
       message: "Products retrieved successfully",
-      products,
       data: products,
       meta: {
         page,
@@ -106,7 +106,7 @@ export const getUserProductsService = async (req: Request, res: Response) => {
         .limit(limit)
         .sort({ createdAt: -1 });
 
-      return res.status(200).json({
+      res.status(200).json({
         success: true,
         data: products,
         meta: {
@@ -117,24 +117,22 @@ export const getUserProductsService = async (req: Request, res: Response) => {
         },
       });
     }
-    if (!search) {
-      products = await Product.find(query)
-        .skip((page - 1) * limit)
-        .limit(limit)
-        .sort({ createdAt: -1 });
+    products = await Product.find(query)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .sort({ createdAt: -1 });
 
-      return res.status(200).json({
-        success: true,
-        message: "User products retrieved successfully",
-        data: products,
-        meta: {
-          page,
-          limit,
-          totalProducts,
-          totalPage,
-        },
-      });
-    }
+    res.status(200).json({
+      success: true,
+      message: "User products retrieved successfully",
+      data: products,
+      meta: {
+        page,
+        limit,
+        totalProducts,
+        totalPage,
+      },
+    });
   } catch (error) {
     return res
       .status(500)
@@ -156,5 +154,51 @@ export const getProductById = async (req: Request, res: Response) => {
     });
   } catch (error) {
     res.status(500).json({ message: "server error" });
+  }
+};
+
+export const updateProductService = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const { name, description, price, stock, categoryId, topSeller } = req.body;
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    product.name = name || product.name;
+    product.description = description || product.description;
+    product.price = price || product.price;
+    product.stock = stock || product.stock;
+    product.categoryId = categoryId || product.categoryId;
+    product.topSeller = topSeller || product.topSeller;
+
+    await product.save();
+
+    res.status(200).json({
+      success: true,
+      data: product,
+      message: "product updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "internal server error" });
+  }
+};
+
+export const deletedProduct = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    await Product.findByIdAndDelete(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Product deleted successfully",
+      data: product,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "internal server error" });
   }
 };

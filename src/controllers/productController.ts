@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import {
   createProductService,
+  deletedProduct,
   getAllProductsService,
   getProductById,
   getUserProductsService,
+  updateProductService,
 } from "@/services/productService";
 
 /**
@@ -152,5 +154,91 @@ export const getUserProductsController = async (
  */
 export const getProductByIdController = async (req: Request, res: Response) => {
   const result = await getProductById(req, res);
+  return result;
+};
+
+/**
+ * @swagger
+ * /product/update-product/{id}:
+ *   put:
+ *     tags:
+ *       - Product
+ *     summary: Update product by ID
+ *     description: updated product information
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - description
+ *               - price
+ *               - stock
+ *               - categoryId
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: iPhone 13
+ *               description:
+ *                 type: string
+ *                 example: Latest Apple iPhone model
+ *               price:
+ *                 type: number
+ *                 example: 999.99
+ *               stock:
+ *                 type: number
+ *                 example: 50
+ *               categoryId:
+ *                 type: string
+ *                 example: 60d21b4667d0d8992e610c85
+ *               topSeller:
+ *                 type: boolean
+ *                 example: false
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *       400:
+ *         description: Invalid input
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+export const updateProductController = async (req: Request, res: Response) => {
+  const result = await updateProductService(req, res);
+  return result;
+};
+
+/**
+ * @swagger
+ * /product/delete-product/{id}:
+ *   delete:
+ *     tags: [Product]
+ *     summary: Delete product by ID
+ *     description: Delete a product by their unique ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The product ID
+ *     responses:
+ *       200:
+ *         description: Product deleted successfully
+ *       404:
+ *         description: Product not found
+ */
+export const deleteProductController = async (req: Request, res: Response) => {
+  const result = await deletedProduct(req, res);
   return result;
 };

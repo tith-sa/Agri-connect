@@ -3,6 +3,7 @@ import {
   createUserController,
   deleteUserController,
   getAllUsersController,
+  getMeController,
   getUserByIdController,
   updateUserController,
 } from "@/controllers/userController";
@@ -22,6 +23,7 @@ router.get(
   authorize(["admin"]),
   getAllUsersController
 );
+router.get("/get-me", authenicate, getMeController);
 router.get(
   "/get-user/:id",
   authenicate,

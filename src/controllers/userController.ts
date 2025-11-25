@@ -2,6 +2,7 @@ import {
   createUserService,
   deleteUserService,
   getAllUsersService,
+  getMeService,
   getUserByIdService,
   updateUserService,
 } from "@/services/userService";
@@ -89,6 +90,27 @@ export const createUserController = async (req: Request, res: Response) => {
  */
 export const getAllUsersController = async (req: Request, res: Response) => {
   const result = await getAllUsersService(req, res);
+  return result;
+};
+
+/**
+ * @swagger
+ * /user/get-me:
+ *   get:
+ *     tags: [User]
+ *     summary: Get current logged-in user
+ *     description: Returns the authenticated user's profile information.
+ *
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved user information
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *       500:
+ *         description: Internal server error
+ */
+export const getMeController = async (req: Request, res: Response) => {
+  const result = await getMeService(req, res);
   return result;
 };
 

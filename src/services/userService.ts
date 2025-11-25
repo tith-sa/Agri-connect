@@ -97,6 +97,22 @@ export const getAllUsersService = async (req: Request, res: Response) => {
   }
 };
 
+export const getMeService = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.userId;
+    if (!userId) {
+      return res.status(400).json({ message: "User ID not found in token" });
+    }
+    const user = await User.findById(userId).select("-password");
+    return res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "internal server error" });
+  }
+};
+
 export const getUserByIdService = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;

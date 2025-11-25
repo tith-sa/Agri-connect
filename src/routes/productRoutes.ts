@@ -1,9 +1,11 @@
 import express from "express";
 import {
   createProductController,
+  deleteProductController,
   getAllProductsController,
   getProductByIdController,
   getUserProductsController,
+  updateProductController,
 } from "@/controllers/productController";
 import { authenicate, authorize } from "@/middleware/authMiddleware";
 
@@ -28,6 +30,23 @@ router.get(
   getUserProductsController
 );
 
-router.get("/get-product/:id", authenicate, getProductByIdController);
+router.get(
+  "/get-product/:id",
+  authenicate,
+
+  getProductByIdController
+);
+router.put(
+  "/update-product/:id",
+  authenicate,
+  authorize(["farmer"]),
+  updateProductController
+);
+router.delete(
+  "/delete-product/:id",
+  authenicate,
+  authorize(["admin", "farmer"]),
+  deleteProductController
+);
 
 export default router;

@@ -77,10 +77,10 @@ export const registerController = async (req: Request, res: Response) => {
  *
  *               email:
  *                 type: string
- *                 example: johndoe@gmail.com
+ *                 example: admin@gmail.com
  *               password:
  *                 type: string
- *                 example: secret123
+ *                 example: Admin@123
  *
  *     responses:
  *       200:
