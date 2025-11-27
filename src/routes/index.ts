@@ -5,6 +5,8 @@ import userRoute from "./userRoutes";
 import categoryRoute from "./categoryRoutes";
 import productRoute from "./productRoutes";
 
+import cartRoutes from "./cartRoutes";
+
 const router = Router();
 
 router.use("/auth", authRoute);
@@ -12,5 +14,7 @@ router.use("/role", roleRoute);
 router.use("/user", userRoute);
 router.use("/category", categoryRoute);
 router.use("/product", productRoute);
+
+router.use("/cart", cartRoutes);
 
 export default router;
