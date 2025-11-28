@@ -63,4 +63,10 @@ export const cartItemService = {
 
     await cartService.updateCartTotal(item.cartId.toString());
   },
+
+  clearCart: async (userId: string) => {
+    const cart = await cartService.getOrCreateCart(userId);
+    await CartItem.deleteMany({ cartId: cart._id });
+    await cartService.updateCartTotal(cart._id.toString());
+  },
 };
