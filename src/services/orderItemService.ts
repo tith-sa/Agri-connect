@@ -1,4 +1,5 @@
 import OrderItem from "@/models/orderItemModel";
+import { ICartItem } from "@/types/cartItem";
 
 export const orderItemService = {
   addItems: async (orderId: string, items: any[]) => {

@@ -3,9 +3,11 @@ import connectDB from "@/config/database";
 import { initSwagger } from "@/config/swagger";
 import Router from "@/routes/index";
 import { adminSeeder } from "@/seed/adminSeeder";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 

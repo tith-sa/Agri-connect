@@ -69,8 +69,8 @@ export const getUserOrdersController = async (req: Request, res: Response) => {
   try {
     const orders = await orderService.getUserOrders(req.user?.userId);
     res.json({ success: true, data: orders });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: err.message });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error });
   }
 };
 
@@ -113,7 +113,7 @@ export const updateOrderStatusController = async (
     const { status } = req.body;
     const updatedOrder = await orderService.updateStatus(orderId, status);
     res.json({ success: true, data: updatedOrder });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: err.message });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error });
   }
 };

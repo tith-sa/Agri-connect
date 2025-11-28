@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { IOrder } from "@/types/order";
 
-export const OrderItemrderSchema = new Schema<IOrder>({
+export const OrderSchema = new Schema<IOrder>({
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   status: {
     type: String,
@@ -11,4 +11,4 @@ export const OrderItemrderSchema = new Schema<IOrder>({
   total: { type: Number, default: 0 },
 });
 
-export default mongoose.model<IOrder>("OrderItemrder", OrderItemrderSchema);
+export default mongoose.model<IOrder>("OrderItemrder", OrderSchema);

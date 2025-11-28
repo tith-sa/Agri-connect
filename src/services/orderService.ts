@@ -1,5 +1,7 @@
 import Order from "@/models/orderModel";
-import { orderItemService } from "@/services/orderItemService";
+import OrderItem from "@/models/orderItemModel";
+import { orderItemService } from "./orderItemService";
+import { ICartItem } from "@/types/cartItem";
 
 export const orderService = {
   createOrder: async (userId: string, cartItems: any[]) => {
@@ -10,10 +12,7 @@ export const orderService = {
     await orderItemService.addItems(order._id, cartItems);
 
     // Step 3: Calculate total
-    const total = cartItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
+    const total = cartItems.reduce((sum, item) => sum + item.price, 0);
     order.total = total;
     await order.save();
 
@@ -21,7 +20,12 @@ export const orderService = {
   },
 
   getUserOrders: async (userId: string) => {
-    return await Order.find({ userId }).sort({ createdAt: -1 });
+    const order = await Order.findOne({ userId }).sort({ createdAt: -1 });
+    if (!order) return null;
+
+    const orderItems = await OrderItem.find({ orderId: order._id });
+
+    return { order, orderItems };
   },
 
   updateStatus: async (orderId: string, status: string) => {

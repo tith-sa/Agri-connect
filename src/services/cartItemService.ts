@@ -34,7 +34,7 @@ export const cartItemService = {
 
     await cartService.updateCartTotal(cart._id.toString());
 
-    return existing;
+    return await CartItem.findById(existing._id);
   },
 
   updateQuantity: async (req: Request, _res: Response) => {
